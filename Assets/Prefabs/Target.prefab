@@ -13,7 +13,8 @@ GameObject:
   - component: {fileID: 8550440055549884808}
   - component: {fileID: 2895576956600783230}
   - component: {fileID: 3599956130715942024}
-  - component: {fileID: 6562090123546109134}
+  - component: {fileID: 6232637187634342644}
+  - component: {fileID: 8541462664019529468}
   m_Layer: 0
   m_Name: Target
   m_TagString: Untagged
@@ -268,7 +269,7 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.5
---- !u!114 &6562090123546109134
+--- !u!114 &6232637187634342644
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -277,6 +278,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 6126682022631265211}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef54e70e02cc35119a79838f78fa3531, type: 3}
+  m_Script: {fileID: 11500000, guid: 4d4fb0f15de94cc7a4f5f5f7be9b6ab8, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: '::'
+  m_EditorClassIdentifier: Assembly-CSharp::TargetController
+--- !u!114 &8541462664019529468
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6126682022631265211}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d62e8ca92140dbcfbcda17ab4f3b374, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PosLabelFollower
+  _labelPrefab: {fileID: 3889533190063102111, guid: 4361c8aed84a2f658930e6f0105e65a2, type: 3}
+  _labelsRootName: LabelsRoot
+  _billboardToCamera: 1
+  _offset: {x: 0, y: 1, z: 0}
+  _labelPrefix: 
+  _fontSizeOverride: -1

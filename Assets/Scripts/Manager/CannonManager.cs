@@ -19,9 +19,21 @@ public class CannonManager : MonoBehaviour
     private List<Vector3> _shotPathPoints = new List<Vector3>();
     private MaterialPropertyBlock _lineRendererPropertyBlock;
     private float _shotPathLength;
+    private PosLabelFollower _posLabelFollower;
     void Start()
     {
         _lineRendererPropertyBlock = new MaterialPropertyBlock();
+    }
+
+    private void Awake()
+    {
+        _posLabelFollower = GetComponent<PosLabelFollower>();
+        if (_posLabelFollower == null)
+        {
+            _posLabelFollower = gameObject.AddComponent<PosLabelFollower>();
+        }
+
+        _posLabelFollower.Bind(transform, new Vector3(0f, 2f, 0f));
     }
     void Update()
     {
@@ -79,7 +91,12 @@ public class CannonManager : MonoBehaviour
         GameObject shot = Instantiate(_shotPrefab, _shotOrigin.position, Quaternion.identity);
         Rigidbody2D shotRigidbody = shot.GetComponent<Rigidbody2D>();
         shotRigidbody.linearVelocity = shotDirection * shotPower;
-        _target.StartTargetBehaviour();
+
+        TargetController target = TargetController.ActiveTarget != null ? TargetController.ActiveTarget : _target;
+        if (target != null)
+        {
+            target.StartTargetBehaviour();
+        }
     }
     private float HandleShotPower()
     {
