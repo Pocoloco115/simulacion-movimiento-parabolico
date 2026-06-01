@@ -14,7 +14,7 @@ public class CannonBallBehaviour : MonoBehaviour
             _posLabelFollower = gameObject.AddComponent<PosLabelFollower>();
         }
 
-        _posLabelFollower.Bind(transform, new Vector3(0f, 0.75f, 0f));
+        _posLabelFollower.Bind(transform);
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created

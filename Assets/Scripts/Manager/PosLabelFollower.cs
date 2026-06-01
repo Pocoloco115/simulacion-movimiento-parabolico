@@ -6,12 +6,20 @@ public class PosLabelFollower : MonoBehaviour
     [SerializeField] private TextMeshPro _labelPrefab;
     [SerializeField] private string _labelsRootName = "LabelsRoot";
     [SerializeField] private bool _billboardToCamera = true;
-    [SerializeField] private Vector3 _offset = new Vector3(0, 1f, 0);
+    [SerializeField] private Vector3 _offset = new Vector3(0, 2f, 0);
     [SerializeField] private float _fontSizeOverride = -1f;
     private Transform _target;
     private TextMeshPro _text;
     private Camera _cam;
     private static Transform s_labelsRoot;
+
+    public void Bind(Transform target)
+    {
+        _target = target;
+
+        EnsureLabel();
+        UpdateNow();
+    }
 
     public void Bind(Transform target, Vector3 offset)
     {
@@ -89,6 +97,14 @@ public class PosLabelFollower : MonoBehaviour
         }
 
         GameObject existing = GameObject.Find("LabelsRoot");
+        if (existing == null)
+        {
+            existing = GameObject.Find("PosLabelsRoot");
+        }
+        if (existing == null)
+        {
+            existing = GameObject.Find("PosLabelRoot");
+        }
         if (existing != null)
         {
             s_labelsRoot = existing.transform;

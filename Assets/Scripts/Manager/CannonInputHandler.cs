@@ -18,8 +18,6 @@ public class CannonInputHandler : MonoBehaviour
         _spawnTargetAction = new InputAction("SpawnTarget", InputActionType.Button, binding: "<Keyboard>/r");
         _spawnTargetAction.performed += HandleSpawnTargetPerformed;
 
-        _pauseAction = new InputAction("Pause", InputActionType.Button, binding: "<Keyboard>/escape");
-        _pauseAction.performed += HandlePauseStarted;
     }
 
     private void OnEnable()
@@ -65,8 +63,5 @@ public class CannonInputHandler : MonoBehaviour
     {
         TargetSpawner.Instance?.SpawnTarget();
     }
-    private void HandlePauseStarted(InputAction.CallbackContext ctx)
-    {
-        Time.timeScale = (Time.timeScale > 0f) ? 0f : 1f;
-    }
+    
 }

@@ -296,6 +296,5 @@ MonoBehaviour:
   _labelPrefab: {fileID: 3889533190063102111, guid: 4361c8aed84a2f658930e6f0105e65a2, type: 3}
   _labelsRootName: LabelsRoot
   _billboardToCamera: 1
-  _offset: {x: 0, y: 1, z: 0}
-  _labelPrefix: 
+  _offset: {x: 0, y: 2, z: 0}
   _fontSizeOverride: -1
