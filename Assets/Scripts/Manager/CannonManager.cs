@@ -2,7 +2,6 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using System.Collections.Generic;
-using UnityEngine.InputSystem;
 public class CannonManager : MonoBehaviour
 {
     private static readonly int PathAmountId = Shader.PropertyToID("_PathAmount");
@@ -11,19 +10,15 @@ public class CannonManager : MonoBehaviour
     [SerializeField] private Slider _shotPowerSliderValue;
     [SerializeField] private Transform _shotOrigin;
     [SerializeField] private LineRenderer _lineRenderer;
+    [SerializeField] private LineRenderer _aimLineRenderer;
+    [SerializeField] private float _aimLineLength = 30f;
     [SerializeField] private GameObject _shotPrefab;
+    [SerializeField] private TargetController _target;
     private int _steps = 250;
     private float _timeInterval = 0.02f;
     private List<Vector3> _shotPathPoints = new List<Vector3>();
     private MaterialPropertyBlock _lineRendererPropertyBlock;
     private float _shotPathLength;
-    private InputAction _fireAction;
-    private void Awake()
-    {
-        _fireAction = new InputAction("Fire", binding: "<Mouse>/leftButton");
-        _fireAction.performed += ctx => OnFireButtonPressed();
-        _fireAction.Enable();
-    }
     void Start()
     {
         _lineRendererPropertyBlock = new MaterialPropertyBlock();
@@ -31,6 +26,7 @@ public class CannonManager : MonoBehaviour
     void Update()
     {
         UpdateCannonAngle();
+        RenderAimLine();
         CalculatePath();
         RenderPath();
     }
@@ -73,7 +69,8 @@ public class CannonManager : MonoBehaviour
             hasPreviousPoint = true;
         }
     }
-    private void OnFireButtonPressed()
+
+    public void Fire()
     {
         float shotPower = HandleShotPower();
         float degree = GetCurrentCannonDegree();
@@ -82,6 +79,7 @@ public class CannonManager : MonoBehaviour
         GameObject shot = Instantiate(_shotPrefab, _shotOrigin.position, Quaternion.identity);
         Rigidbody2D shotRigidbody = shot.GetComponent<Rigidbody2D>();
         shotRigidbody.linearVelocity = shotDirection * shotPower;
+        _target.StartTargetBehaviour();
     }
     private float HandleShotPower()
     {
@@ -113,5 +111,26 @@ public class CannonManager : MonoBehaviour
         _lineRenderer.GetPropertyBlock(_lineRendererPropertyBlock);
         _lineRendererPropertyBlock.SetFloat(PathAmountId, Mathf.Max(1f, _shotPathLength));
         _lineRenderer.SetPropertyBlock(_lineRendererPropertyBlock);
+    }
+    private void RenderAimLine()
+    {
+        if (_aimLineRenderer == null) return;
+
+        Vector3 origin = _shotOrigin.position;
+
+        float degree = GetCurrentCannonDegree();
+        Vector2 dir = new Vector2(Mathf.Cos(degree * Mathf.Deg2Rad), Mathf.Sin(degree * Mathf.Deg2Rad));
+
+        Vector3 end = origin + (Vector3)(dir * _aimLineLength);
+
+        RaycastHit2D hit = Physics2D.Raycast(origin, dir, _aimLineLength);
+        if (hit.collider != null)
+        {
+            end = hit.point;
+        }
+
+        _aimLineRenderer.positionCount = 2;
+        _aimLineRenderer.SetPosition(0, origin);
+        _aimLineRenderer.SetPosition(1, end);
     }
 }
