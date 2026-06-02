@@ -4,6 +4,7 @@ using UnityEngine;
 public class CannonBallBehaviour : MonoBehaviour
 {
     [SerializeField] private float _lifetime = 5f;
+    [SerializeField] private GameObject _explosionPrefab;
     private PosLabelFollower _posLabelFollower;
 
     private void Awake()
@@ -39,8 +40,12 @@ public class CannonBallBehaviour : MonoBehaviour
         {
             if (collision.collider.GetComponentInParent<TargetController>() != null)
             {
+                Vector2 cannonBallCenter = GetComponent<Collider2D>().bounds.center;
+                Vector2 collisionCenter = collision.collider.bounds.center;
+                Vector2 explosionPos = (cannonBallCenter + collisionCenter) / 2f;
                 Vector2 impactPoint = (Vector2)transform.position;
                 CollisionFeedbackAnim.Instance?.StartAnim(impactPoint);
+                Instantiate(_explosionPrefab, explosionPos, Quaternion.identity);
             }
         }
         Destroy(gameObject);

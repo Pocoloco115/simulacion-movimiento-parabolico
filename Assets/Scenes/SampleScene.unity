@@ -5593,7 +5593,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 90
   m_WholeNumbers: 1
-  m_Value: 20
+  m_Value: 31
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []

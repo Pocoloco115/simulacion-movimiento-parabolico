@@ -171,6 +171,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   _lifetime: 5
+  _explosionPrefab: {fileID: 2665096328803509304, guid: fc7a210ee76ac540c997a766ef6ba0f5, type: 3}
 --- !u!114 &6243420893179726888
 MonoBehaviour:
   m_ObjectHideFlags: 0
