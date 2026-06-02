@@ -24,9 +24,14 @@ public class TargetSpawner : MonoBehaviour
             return null;
         }
 
-        Vector3 spawnPosition = TargetController.ActiveTarget != null
-            ? TargetController.ActiveTarget.transform.position
-            : TargetController.LastKnownPosition;
+        if (TargetController.ActiveTarget != null)
+        {
+            return TargetController.ActiveTarget;
+        }
+
+        Vector3 spawnPosition = TargetController.HasInitialSpawnPosition
+            ? TargetController.InitialSpawnPosition
+            : Vector3.zero;
 
         TargetController spawnedTarget = Instantiate(_targetPrefab, spawnPosition, Quaternion.identity);
         return spawnedTarget;

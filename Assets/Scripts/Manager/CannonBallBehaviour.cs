@@ -35,6 +35,14 @@ public class CannonBallBehaviour : MonoBehaviour
     }
     void OnCollisionEnter2D(Collision2D collision)
     {
+        if(collision.gameObject.CompareTag("Target"))
+        {
+            if (collision.collider.GetComponentInParent<TargetController>() != null)
+            {
+                Vector2 impactPoint = (Vector2)transform.position;
+                CollisionFeedbackAnim.Instance?.StartAnim(impactPoint);
+            }
+        }
         Destroy(gameObject);
     }
 }

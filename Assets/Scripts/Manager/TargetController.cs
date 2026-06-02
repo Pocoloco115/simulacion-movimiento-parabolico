@@ -5,7 +5,8 @@ using UnityEngine;
 public class TargetController : MonoBehaviour
 {
     public static TargetController ActiveTarget { get; private set; }
-    public static Vector3 LastKnownPosition { get; private set; }
+    public static Vector3 InitialSpawnPosition { get; private set; }
+    public static bool HasInitialSpawnPosition { get; private set; }
 
     private Rigidbody2D _rigidbody2D;
     private CircleCollider2D _collider2D;
@@ -17,7 +18,12 @@ public class TargetController : MonoBehaviour
         _collider2D = GetComponent<CircleCollider2D>();
         _rigidbody2D.gravityScale = 0f;
         ActiveTarget = this;
-        LastKnownPosition = transform.position;
+
+        if (!HasInitialSpawnPosition)
+        {
+            InitialSpawnPosition = transform.position;
+            HasInitialSpawnPosition = true;
+        }
 
         _posLabelFollower = gameObject.GetComponent<PosLabelFollower>();
         if (_posLabelFollower == null)
